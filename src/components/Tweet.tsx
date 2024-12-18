@@ -1,21 +1,24 @@
-import { IconDots } from "@tabler/icons-react";
 
-export type TweetType = {
-  tweet: {
-    username: string;
-    name: string;
-    content: string;
-    profilePicture: string;
-    imageUrl?: string;
-    stats?: {
-      likes: number;
-    },
-  }
+import { useState } from "react";
+import { HeartFilled, HeartOutlined, MessageOutlined, RetweetOutlined, ShareAltOutlined } from "@ant-design/icons"
+export type TweetModel = {
+  username: string;
+  name: string;
+  content: string;
+  profilePicture: string;
+  imageUrl?: string;
+  stats?: {
+    likes: number;
+  },
 }
 
-export function Tweet({ tweet }: TweetType) {
+type TweetProps = {
+  tweet: TweetModel;
+}
+
+export function Tweet({ tweet }: TweetProps) {
   return (
-    <div className="border p-4 rounded-lg w-96 mb-4">
+    <div className="border p-4 rounded-lg mb-4">
       <div className="flex justify-between items-center">
         <div className="flex">
           <img
@@ -31,7 +34,6 @@ export function Tweet({ tweet }: TweetType) {
           </div>
         </div>
         <button>
-          <IconDots />
         </button>
       </div>
       <div className="mt-3">
@@ -43,6 +45,31 @@ export function Tweet({ tweet }: TweetType) {
         }
         <p>{tweet.content}</p>
       </div>
+      <TweetBar />
+    </div>
+  );
+}
+
+function TweetBar() {
+  const [like, setLike] = useState(false)
+
+  return (
+    <div className="flex justify-between items-center mt-4">
+      <button onClick={() => setLike(!like)}>
+        {!like
+          ? <HeartOutlined />
+          : <HeartFilled />
+        }
+      </button>
+      <button>
+        <MessageOutlined />
+      </button>
+      <button>
+        <RetweetOutlined />
+      </button>
+      <button>
+        <ShareAltOutlined />
+      </button>
     </div>
   );
 }
